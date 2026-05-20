@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'org.historybot'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Environment variables
+    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+    
+    // Telegram Bot SDK
+    implementation 'org.telegram:telegrambots:6.8.0'
+    
+    // PostgreSQL Driver
+    implementation 'org.postgresql:postgresql:42.7.2'
+    
+    // Liquibase for database migrations
+    implementation 'org.liquibase:liquibase-core:4.25.1'
+    implementation 'com.github.blagerweij:liquibase-sessionlock:1.6.9' // Helpful for concurrent migrations
+    
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.12'
+    implementation 'org.slf4j:slf4j-simple:2.0.12'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+application {
+    mainClass = 'org.historybot.Main'
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="2" author="history-bot">
+        <!-- Сценарий 1: Карибский кризис -->
+        <insert tableName="scenarios">
+            <column name="name" value="Карибский кризис"/>
+            <column name="description" value="1962 год. Мир на грани ядерной войны. Вы — аналитик ЦРУ."/>
+        </insert>
+
+        <!-- Шаг 0: Вводная -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Карибский кризис')"/>
+            <column name="step_order" value="0"/>
+            <column name="content" value="Октябрь 1962 года. Мир замер в самом опасном противостоянии Холодной войны. Соединенные Штаты обнаружили присутствие советских ядерных ракет на Кубе, всего в 90 милях от побережья Флориды.&#10;&#10;Вы — ведущий аналитик ЦРУ и специальный советник президента Джона Кеннеди. Ваша задача — анализировать разведданные и предлагать решения, которые позволят избежать ядерного апокалипсиса, сохранив при этом национальные интересы. Каждое ваше слово может стать либо шагом к миру, либо детонатором Третьей мировой войны."/>
+        </insert>
+
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 0)"/>
+            <column name="text" value="Приступить к заданию"/>
+            <column name="feedback" value="Вы входите в зал совещаний Совета национальной безопасности. Внимание приковано к вам."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 1 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Карибский кризис')"/>
+            <column name="step_order" value="1"/>
+            <column name="content" value="Разведывательные полеты самолетов U-2 подтвердили худшие опасения: на Кубе монтируются стартовые площадки для ракет Р-12. Это означает, что большинство крупных городов США, включая Вашингтон и Нью-Йорк, теперь находятся под прицелом.&#10;&#10;В Овальном кабинете собрался комитет EXCOMM. Генералы настаивают на немедленном массированном авиаударе по позициям ПВО и ракетным базам, пока они не приведены в боевую готовность. Президент смотрит на вас. Каково ваше мнение?"/>
+        </insert>
+
+        <!-- Варианты для Шага 1 -->
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 1)"/>
+            <column name="text" value="Установить морскую блокаду"/>
+            <column name="feedback" value="Кеннеди соглашается. Объявлен 'карантин', чтобы избежать термина 'блокада', означающего акт войны. Это исторически верный путь к деэскалации."/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 1)"/>
+            <column name="text" value="Нанести немедленный авиаудар"/>
+            <column name="feedback" value="Удары нанесены, но часть ракет уцелела. СССР отвечает ударом по Западному Берлину. Вы свернули на тропу тотальной войны."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 1)"/>
+            <column name="text" value="Начать тайные переговоры"/>
+            <column name="feedback" value="Пока вы пытаетесь связаться с Москвой тайно, ракеты приводятся в готовность. Время упущено, и преимущество теперь на стороне Хрущева."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 2 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Карибский кризис')"/>
+            <column name="step_order" value="2"/>
+            <column name="content" value="Линия 'карантина' установлена, но советские сухогрузы продолжают движение. Разведка сообщает, что их сопровождают подводные лодки, возможно, вооруженные ядерными торпедами.&#10;&#10;Ситуация накалена до предела: один случайный выстрел может спровоцировать цепную реакцию. Американские эсминцы преграждают путь. Корабли СССР уже в прямой видимости. Ваши инструкции флоту?"/>
+        </insert>
+
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 2)"/>
+            <column name="text" value="Сделать предупредительный выстрел"/>
+            <column name="feedback" value="Холодный расчет сработал. Корабли СССР остановились для ожидания команд из Москвы. Исторический баланс сохранен."/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 2)"/>
+            <column name="text" value="Идти на таран без открытия огня"/>
+            <column name="feedback" value="Столкновение вызывает хаос. На одной из подлодок капитан едва не отдает приказ о пуске ядерной торпеды. Мир висит на волоске."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 2)"/>
+            <column name="text" value="Открыть огонь на поражение"/>
+            <column name="feedback" value="Первые залпы морского сражения. Москва расценивает это как начало открытой войны. Эскалация становится неуправляемой."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 3 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Карибский кризис')"/>
+            <column name="step_order" value="3"/>
+            <column name="content" value="От Никиты Хрущева приходят два письма. Первое — личное и эмоциональное, предлагающее демонтаж ракет в обмен на гарантии ненападения на Кубу. Второе — официальное и жесткое, требующее вывода американских ракет 'Юпитер' из Турции.&#10;&#10;Ваши советники в замешательстве. Официальное принятие второго условия может подорвать авторитет НАТО. Как поступить?"/>
+        </insert>
+
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 3)"/>
+            <column name="text" value="Ответить на первое письмо, игнорируя второе"/>
+            <column name="feedback" value="Это знаменитый маневр Кеннеди. Вы делаете вид, что второго письма не было, предлагая сделку на основе первого. Верный ход."/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 3)"/>
+            <column name="text" value="Публично принять оба условия"/>
+            <column name="feedback" value="Европейские союзники по НАТО в ярости. Политический кризис внутри альянса ослабляет позиции Запада в разгар противостояния."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 3)"/>
+            <column name="text" value="Отклонить условия, требуя капитуляции"/>
+            <column name="feedback" value="Москва переходит к обороне Кубы всеми средствами. Переговорный процесс сорван."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 4 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Карибский кризис')"/>
+            <column name="step_order" value="4"/>
+            <column name="content" value="Наступила 'Черная суббота'. Советская ПВО на Кубе сбивает американский самолет U-2 под управлением Рудольфа Андерсона. Пилот погиб. Военные требуют немедленного ответа — уничтожения всех зенитных батарей на острове.&#10;&#10;Это прямая провокация или трагическая ошибка исполнителей на местах? Ошибка в решении сейчас приведет к немедленному началу боевых действий. Что предложите?"/>
+        </insert>
+
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 4)"/>
+            <column name="text" value="Запретить ответ, продолжить диалог"/>
+            <column name="feedback" value="Мудрое решение. Позже выяснится, что приказ о пуске был дан на месте без санкции Москвы. Вы спасли мир от случайной войны."/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 4)"/>
+            <column name="text" value="Нанести точечный удар по ПВО"/>
+            <column name="feedback" value="СССР считает это началом вторжения. Советские войска на Кубе получают приказ использовать тактическое ядерное оружие против флота США."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 4)"/>
+            <column name="text" value="Объявить о начале операции 'Мангуст'"/>
+            <column name="feedback" value="Полномасштабное вторжение на Кубу началось. Холодная война официально стала 'горячей' Третьей мировой."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 5 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Карибский кризис')"/>
+            <column name="step_order" value="5"/>
+            <column name="content" value="Москва делает финальное предложение через секретные каналы: ракеты покидают Кубу, если США публично обещают не нападать на остров и тайно (через полгода) вывезут ракеты из Турции.&#10;&#10;Это ваш последний шанс закончить кризис без единого ядерного взрыва. Цена — частичная уступка престижем. Каков ваш финальный совет президенту?"/>
+        </insert>
+
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 5)"/>
+            <column name="text" value="Принять сделку на условиях СССР"/>
+            <column name="feedback" value="Кризис разрешен. Ракеты вывезены, мир спасен. Вы успешно завершили миссию, сохранив планету для будущих поколений."/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 5)"/>
+            <column name="text" value="Отказать по Турции, стоять на своем"/>
+            <column name="feedback" value="СССР отказывается вывозить ракеты. Кризис затягивается, превращаясь в постоянную ядерную угрозу у самых границ США."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 5)"/>
+            <column name="text" value="Потребовать капитуляции Кастро"/>
+            <column name="feedback" value="Абсурдное требование в такой момент. Переговоры окончательно заходят в тупик. Мир остается в шаге от пропасти."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

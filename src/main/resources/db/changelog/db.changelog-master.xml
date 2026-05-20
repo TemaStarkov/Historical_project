@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="db/changelog/changes/001-initial-schema.xml"/>
+    <include file="db/changelog/changes/002-test-data.xml"/>
+    <include file="db/changelog/changes/003-historical-summary.xml"/>
+    <include file="db/changelog/changes/004-ussr-scenarios.xml"/>
+    <include file="db/changelog/changes/005-mistake-tracking.xml"/>
+
+</databaseChangeLog>

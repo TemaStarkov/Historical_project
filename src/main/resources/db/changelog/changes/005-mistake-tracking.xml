@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="5" author="history-bot">
+        <!-- Добавляем колонку для объяснения правильного ответа на каждом шаге -->
+        <addColumn tableName="steps">
+            <column name="correct_explanation" type="TEXT"/>
+        </addColumn>
+
+        <!-- Карибский кризис -->
+        <update tableName="steps">
+            <column name="correct_explanation" value="Исторически Кеннеди выбрал морскую блокаду (карантин), что позволило выиграть время и не начинать стрельбу первым."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 1</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Предупредительные выстрелы (глубинные бомбы малого заряда) заставили советские подлодки всплыть, не спровоцировав их на запуск торпед."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 2</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="США проигнорировали жесткое второе письмо Хрущева и ответили только на первое, мирное, что позволило продолжить диалог."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 3</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Несмотря на гибель пилота Андерсона, Кеннеди наложил вето на ответный удар, понимая, что это начало конца."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 4</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Компромисс был достигнут: СССР убрал ракеты с Кубы, а США тайно вывели свои ракеты из Турции через полгода."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Карибский кризис') AND step_order = 5</where>
+        </update>
+
+        <!-- Берлинский кризис -->
+        <update tableName="steps">
+            <column name="correct_explanation" value="В первую ночь было приказано не стрелять, чтобы не дать Западу повода для немедленного военного вмешательства."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 1</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Для дипломатов сохранили свободу прохода, что удержало ситуацию в рамках политического спора, а не войны."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 2</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Танки отводили по одному по взаимной договоренности, что позволило обеим сторонам 'сохранить лицо'."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 3</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="СССР пошел на переговоры о транзите, что фактически закрепило существование Стены и признание ГДР."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 4</where>
+        </update>
+
+        <!-- Пражская весна -->
+        <update tableName="steps">
+            <column name="correct_explanation" value="Военные учения на границах были использованы как инструмент устрашения перед вводом войск."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 1</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Ввод войск 21 августа 1968 года был обоснован 'просьбой о помощи' со стороны чехословацких коммунистов."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 2</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Московский протокол фактически аннулировал все реформы Пражской весны и вернул жесткую цензуру."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 3</where>
+        </update>
+        <update tableName="steps">
+            <column name="correct_explanation" value="Доктрина Брежнева закрепила право СССР на интервенцию в любую страну соцлагеря при угрозе строю."/>
+            <where>scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 4</where>
+        </update>
+
+        <!-- Добавляем таблицу для хранения ошибок пользователя в текущей сессии -->
+        <createTable tableName="user_mistakes">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scenario_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="step_order" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="explanation" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

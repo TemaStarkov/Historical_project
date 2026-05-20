@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="3" author="history-bot">
+        <addColumn tableName="scenarios">
+            <column name="historical_summary" type="TEXT"/>
+        </addColumn>
+
+        <update tableName="scenarios">
+            <column name="historical_summary" value="В реальности Карибский кризис завершился мирным компромиссом. СССР вывел ракеты с Кубы в обмен на гарантии ненападения США на остров и секретное обязательство Вашингтона убрать свои ракеты 'Юпитер' из Турции. Этот момент стал отправной точкой для политики 'разрядки' и установления прямой линии связи между Кремлем и Белым домом."/>
+            <where>name = 'Карибский кризис'</where>
+        </update>
+    </changeSet>
+
+</databaseChangeLog>

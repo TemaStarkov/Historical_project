@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1" author="history-bot">
+        <createTable tableName="scenarios">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+        </createTable>
+
+        <createTable tableName="steps">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scenario_id" type="BIGINT">
+                <constraints foreignKeyName="fk_step_scenario" referencedTableName="scenarios" referencedColumnNames="id" nullable="false"/>
+            </column>
+            <column name="step_order" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="options">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="step_id" type="BIGINT">
+                <constraints foreignKeyName="fk_option_step" referencedTableName="steps" referencedColumnNames="id" nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="feedback" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_correct" type="BOOLEAN" defaultValueBoolean="false"/>
+        </createTable>
+
+        <createTable tableName="user_progress">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scenario_id" type="BIGINT"/>
+            <column name="current_step_id" type="BIGINT"/>
+            <column name="score" type="INT" defaultValueNumeric="0"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

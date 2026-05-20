@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    container_name: history_bot_db
+    restart: always
+    environment:
+      POSTGRES_USER: ArtStar
+      POSTGRES_PASSWORD: 52@jdpbQ
+      POSTGRES_DB: history_bot
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  bot:
+    build: .
+    container_name: history_bot_app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/history_bot
+      - DB_USER=ArtStar
+      - DB_PASSWORD=52@jdpbQ
+      - BOT_TOKEN=8788706886:AAEX7VOGwEf-edZowRUW3mpQG27RVG4XTmU
+      - BOT_USERNAME=@ArchiveAgent_bot
+
+volumes:
+  postgres_data:

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="4" author="history-bot">
+        <!-- Сценарий 2: Берлинская стена (СССР) -->
+        <insert tableName="scenarios">
+            <column name="name" value="Берлинский кризис 1961"/>
+            <column name="description" value="Операция 'Роза'. Вы — офицер связи КГБ в Восточном Берлине."/>
+            <column name="historical_summary" value="В реальности возведение Берлинской стены 13 августа 1961 года позволило ГДР остановить 'утечку мозгов' на Запад. Кризис достиг пика во время танкового противостояния у Чекпойнт-Чарли, но завершился без прямой стычки. Стена простояла 28 лет, став символом железного занавеса."/>
+        </insert>
+
+        <!-- Шаг 0: Вводная -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961')"/>
+            <column name="step_order" value="0"/>
+            <column name="content" value="Август 1961 года. Берлин раздираем противоречиями. Ежедневно тысячи квалифицированных специалистов бегут из Восточного сектора в Западный через открытую границу. Экономика ГДР на грани коллапса.&#10;&#10;Вы — специальный представитель КГБ при правительстве Вальтера Ульбрихта. Москва дала секретное добро на радикальные меры. Ваша задача — изолировать Западный Берлин, не спровоцировав при этом прямое военное столкновение с НАТО. Вы начинаете операцию 'Роза'."/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 0)"/>
+            <column name="text" value="Начать развертывание"/>
+            <column name="feedback" value="Войска ГДР и техника выдвигаются к границе секторов под покровом ночи."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 1 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961')"/>
+            <column name="step_order" value="1"/>
+            <column name="content" value="Ночь 13 августа. Ваши инженерные части начали перекрывать улицы колючей проволокой и разбирать мостовые. Жители города в шоке. Западные патрули в замешательстве наблюдают за происходящим.&#10;&#10;Поступает сообщение, что на некоторых участках люди пытаются прорваться через еще не достроенные заграждения. Каков приказ пограничникам?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 1)"/>
+            <column name="text" value="Пресекать попытки без применения оружия"/>
+            <column name="feedback" value="Верно. Лишняя кровь в первую ночь могла вызвать немедленный ответ США. Вы действуете осторожно. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 1)"/>
+            <column name="text" value="Открыть огонь на поражение"/>
+            <column name="feedback" value="Резкая эскалация. Западные СМИ взрываются заголовками о 'бойне'. США приводят войска в Германии в боевую готовность. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 1)"/>
+            <column name="text" value="Пропускать всех, кто успеет"/>
+            <column name="feedback" value="Ульбрихт в ярости. Ваша нерешительность позволяет еще нескольким сотням ценных кадров уйти на Запад. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 2 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961')"/>
+            <column name="step_order" value="2"/>
+            <column name="content" value="Прошло несколько дней. Проволока заменяется бетонными блоками. Западный Берлин полностью окружен. Президент Кеннеди присылает в город дополнительные подкрепления и назначает генерала Клея ответственным за ситуацию.&#10;&#10;Американцы начинают проверять 'свободу прохода' своих дипломатов через КПП 'Чарли'. Ульбрихт требует обыскивать всех без исключения. Ваша рекомендация?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 2)"/>
+            <column name="text" value="Соблюдать статус-кво для дипломатов"/>
+            <column name="feedback" value="Вы не даете повода для формального объявления войны. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 2)"/>
+            <column name="text" value="Блокировать КПП для всех"/>
+            <column name="feedback" value="Американские бульдозеры выдвигаются, чтобы снести ваши заграждения. Начинается прямой конфликт. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 2)"/>
+            <column name="text" value="Передать КПП под полный контроль ГДР"/>
+            <column name="feedback" value="США отказываются признавать легитимность пограничников ГДР. Напряжение растет. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 3 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961')"/>
+            <column name="step_order" value="3"/>
+            <column name="content" value="Октябрь 1961. Пик кризиса. На КПП 'Чарли' друг против друга в упор стоят американские и советские танки. Достаточно одного случайного выстрела нервного наводчика.&#10;&#10;Хрущев на связи. Он требует показать зубы, но не начинать войну первым. Что делать с нашими танками?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 3)"/>
+            <column name="text" value="Отводить по одному танку по очереди"/>
+            <column name="feedback" value="Гениальный дипломатический ход. Вы предлагаете американцам взаимный отвод. Мир вздохнул с облегчением. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 3)"/>
+            <column name="text" value="Приказать идти на прорыв"/>
+            <column name="feedback" value="Начинается танковое сражение в центре Берлина. Это конец мирного сосуществования. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 3)"/>
+            <column name="text" value="Стоять до последнего, не двигаясь"/>
+            <column name="feedback" value="Многочасовое стояние изматывает экипажи. Риск случайной ошибки возрастает ежеминутно. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 4 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961')"/>
+            <column name="step_order" value="4"/>
+            <column name="content" value="Стена построена. Теперь это не просто колючая проволока, а сложная система укреплений. Западные страны вводят экономические санкции. Внутри ГДР зреет недовольство разделением семей.&#10;&#10;Запад предлагает начать переговоры о статусе города, но требует уступок по транзиту. Как ответит Москва?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 4)"/>
+            <column name="text" value="Согласиться на переговоры о транзите"/>
+            <column name="feedback" value="Вы фиксируете границы и получаете признание ГДР де-факто. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 4)"/>
+            <column name="text" value="Объявить о новой блокаде дорог"/>
+            <column name="feedback" value="Повторение 1948 года. Запад снова запускает 'Воздушный мост'. Отношения на нуле. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 4)"/>
+            <column name="text" value="Игнорировать предложения Запада"/>
+            <column name="feedback" value="Изоляция ГДР усиливается. Экономические трудности нарастают быстрее прогнозов. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 5 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961')"/>
+            <column name="step_order" value="5"/>
+            <column name="content" value="Противостояние завершено. Стена стала реальностью. Вы обеспечили выживание социалистического режима в ГДР, но цена — расколотый город и тысячи сломанных судеб.&#10;&#10;Каков ваш финальный доклад в Кремль о результатах операции 'Роза'?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 5)"/>
+            <column name="text" value="Цели достигнуты, мир сохранен"/>
+            <column name="feedback" value="Вы успешно справились с задачей. СССР сохранил влияние в Восточной Европе без большой войны. Миссия выполнена."/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 5)"/>
+            <column name="text" value="Нужно было идти дальше и занять весь город"/>
+            <column name="feedback" value="Слишком рискованная стратегия, которая могла привести к ядерному обмену. Ваша оценка признана авантюрной. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Берлинский кризис 1961') AND step_order = 5)"/>
+            <column name="text" value="Стена — это временная и слабая мера"/>
+            <column name="feedback" value="История покажет, что вы были отчасти правы, но на данный момент это было единственное решение. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Сценарий 3: Пражская весна (СССР) -->
+        <insert tableName="scenarios">
+            <column name="name" value="Пражская весна 1968"/>
+            <column name="description" value="Операция 'Дунай'. Вы — советник в аппарате ЦК КПСС."/>
+            <column name="historical_summary" value="Пражская весна завершилась вводом войск стран Варшавского договора в Чехословакию 21 августа 1968 года. Это привело к сворачиванию реформ Дубчека и провозглашению 'доктрины Брежнева' о праве СССР на вмешательство в дела союзников для защиты социализма."/>
+        </insert>
+
+        <!-- Шаг 0: Вводная -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Пражская весна 1968')"/>
+            <column name="step_order" value="0"/>
+            <column name="content" value="1968 год. В Чехословакии набирают силу реформы Александра Дубчека — 'социализм с человеческим лицом'. Ослабление цензуры и рыночные элементы пугают консервативное крыло в Москве.&#10;&#10;Вы — влиятельный аналитик при Леониде Брежневе. Ваша задача — не допустить выхода ЧССР из-под влияния Москвы и развала Варшавского договора. Если реформы зайдут слишком далеко, социалистический лагерь может посыпаться как домино."/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 0)"/>
+            <column name="text" value="Начать политическое давление"/>
+            <column name="feedback" value="Вы отправляетесь на переговоры с чехословацким руководством в Чьерна-над-Тисоу."/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 1 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Пражская весна 1968')"/>
+            <column name="step_order" value="1"/>
+            <column name="content" value="Переговоры в Чьерна-над-Тисоу проходят тяжело. Дубчек уверяет в верности союзу, но отказывается возвращать цензуру и запрещать оппозиционные клубы.&#10;&#10;Брежнев ждет вашего совета: верить ли обещаниям чехов или пора готовить военный сценарий?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 1)"/>
+            <column name="text" value="Дать последний шанс, но начать учения на границе"/>
+            <column name="feedback" value="Верный дипломатический ход. Демонстрация силы при сохранении канала связи. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 1)"/>
+            <column name="text" value="Немедленно арестовать руководство ЧССР"/>
+            <column name="feedback" value="Слишком грубо. Вы провоцируете народное восстание еще до ввода основных сил. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 1)"/>
+            <column name="text" value="Полностью поддержать реформы Дубчека"/>
+            <column name="feedback" value="Брежнев в недоумении. Ваша лояльность поставлена под сомнение. Консерваторы в ЦК требуют вашей отставки. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 2 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Пражская весна 1968')"/>
+            <column name="step_order" value="2"/>
+            <column name="content" value="Ситуация в Праге выходит из-под контроля ЦК КПЧ. Радикалы требуют выхода из Варшавского договора. Брежнев получает 'письмо пяти' от консервативных чехословацких лидеров с просьбой о помощи.&#10;&#10;Пора принимать окончательное решение. Операция 'Дунай' готова к запуску. Ваш совет?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 2)"/>
+            <column name="text" value="Ввести войска стран Варшавского договора"/>
+            <column name="feedback" value="Вы выбираете силовое решение для сохранения единства блока. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 2)"/>
+            <column name="text" value="Продолжить только экономическую блокаду"/>
+            <column name="feedback" value="Чехословакия начинает искать поддержку на Западе. Опасность выхода из соцлагеря растет. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 2)"/>
+            <column name="text" value="Вывести все советские части из ЧССР"/>
+            <column name="feedback" value="Вакуум власти заполняется прозападными силами. Политическое поражение Москвы. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 3 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Пражская весна 1968')"/>
+            <column name="step_order" value="3"/>
+            <column name="content" value="Танки на улицах Праги. Жители строят баррикады и пытаются говорить с солдатами. Мировое сообщество осуждает ввод войск.&#10;&#10;Дубчек арестован и доставлен в Москву. Как с ним поступить во время переговоров в Кремле?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 3)"/>
+            <column name="text" value="Заставить подписать Московский протокол"/>
+            <column name="feedback" value="Вы принуждаете руководство ЧССР к 'нормализации' ситуации на условиях Москвы. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 3)"/>
+            <column name="text" value="Освободить без условий под давлением Запада"/>
+            <column name="feedback" value="Демонстрация слабости. Реформы вспыхивают с новой силой. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 3)"/>
+            <column name="text" value="Приговорить к длительному сроку"/>
+            <column name="feedback" value="Вы создаете мученика, провоцируя партизанскую войну в Чехословакии. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 4 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Пражская весна 1968')"/>
+            <column name="step_order" value="4"/>
+            <column name="content" value="Ситуация стабилизирована, но в обществе ЧССР растет пассивное сопротивление. Начинается период 'нормализации'.&#10;&#10;Как закрепить успех и не допустить повторения событий в других странах соцлагеря?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 4)"/>
+            <column name="text" value="Провозгласить доктрину об ограничении суверенитета"/>
+            <column name="feedback" value="Это становится известно как 'доктрина Брежнева' — жесткий контроль над соцлагерем. (Исторический путь)"/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 4)"/>
+            <column name="text" value="Начать демократизацию самого СССР"/>
+            <column name="feedback" value="Слишком рано. Политическая система не готова, начинается хаос в управлении. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 4)"/>
+            <column name="text" value="Разорвать отношения со всеми несогласными странами"/>
+            <column name="feedback" value="Вы остаетесь в полной изоляции даже внутри собственного блока. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+        <!-- Шаг 5 -->
+        <insert tableName="steps">
+            <column name="scenario_id" valueComputed="(SELECT id FROM scenarios WHERE name = 'Пражская весна 1968')"/>
+            <column name="step_order" value="5"/>
+            <column name="content" value="Миссия завершена. Чехословакия остается верным союзником СССР еще на 20 лет. Вы защитили границы социалистического мира, но цена этого — окончательная потеря симпатий европейских левых сил.&#10;&#10;Каков ваш финальный вывод для истории?"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 5)"/>
+            <column name="text" value="Долг перед союзом выполнен"/>
+            <column name="feedback" value="Вы сохранили империю. Это была трудная, но необходимая с точки зрения тогдашней политики победа. Миссия выполнена."/>
+            <column name="is_correct" valueBoolean="true"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 5)"/>
+            <column name="text" value="Нужно было дать им свободу"/>
+            <column name="feedback" value="Ваши взгляды опережают время, но в 1968 году это означало бы крах всей системы. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+        <insert tableName="options">
+            <column name="step_id" valueComputed="(SELECT id FROM steps WHERE scenario_id = (SELECT id FROM scenarios WHERE name = 'Пражская весна 1968') AND step_order = 5)"/>
+            <column name="text" value="Это было началом конца"/>
+            <column name="feedback" value="Некоторые историки согласятся с вами, считая это победу пирровой. (Альт. путь)"/>
+            <column name="is_correct" valueBoolean="false"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
