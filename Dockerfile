@@ -5,13 +5,12 @@ WORKDIR /home/gradle/src
 RUN gradle build --no-daemon -x test
 
 # Run stage
-FROM openjdk:17-slim
+FROM eclipse-temurin:17-jre-focal
 EXPOSE 8080
 RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/history-bot.jar
-COPY --from=build /home/gradle/src/.env /app/.env
+# Note: Since we use shadow plugin, we need to pick the shadow jar
+COPY --from=build /home/gradle/src/build/libs/*-all.jar /app/history-bot.jar
 WORKDIR /app
 
-# We use the 'shadowJar' or just the main jar if application plugin is used.
-# Since we use 'application' plugin, we need to make sure the jar is executable.
+# The entrypoint points to the copied shadow jar
 ENTRYPOINT ["java", "-jar", "/app/history-bot.jar"]
